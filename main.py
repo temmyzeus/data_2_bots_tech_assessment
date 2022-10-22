@@ -10,6 +10,21 @@ json_files: Generator[Path, None, None] = data_dir.glob("*.json")
 
 
 def get_type(attribute: Union[str, int, dict, list]):
+    """
+    Return an atribute type, which should be either of `string`, `integer`, `array` or `enum`.
+    If attribute does not match any of this type, an AttributeError is raised.
+
+    Parameters:
+    ----------
+    attribute: [str, int, dict, list]
+        A attribute whose type is checked
+
+    Returns:
+    --------
+    
+    attribute_type:
+        `string`, `integer`, `array` or `enum`
+    """
     if isinstance(attribute, str):
         return "string"
     elif isinstance(attribute, int):
@@ -28,11 +43,17 @@ def crawl_schema(message: dict, update_schema: dict):
     """
     Crawl a dict or a mapping and infer the types, then update the details to another dict.
 
+    Parameters:
+    -----------
     message: dict
         This is the mapping which the data types of it's values is to be infered.
 
     update_schema: dict
         This is a mapping with keys mapped to their data types and other properties.
+
+    Returns:
+    -------
+    None
     """
     prev_key = None
     for key, value in message.items():
